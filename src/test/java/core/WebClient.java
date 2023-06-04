@@ -1,7 +1,8 @@
+package core;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,9 +11,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class WebClient {
+
     private static WebDriver driver;
     private static WebDriverWait wait;
-
 
     public String navigateToUrl(String url, String username, String password) {
 
@@ -32,8 +33,10 @@ public class WebClient {
     }
 
     public void login(String username, String password) {
+
         driver.findElement(By.id("login-username")).sendKeys(username);
         driver.findElement(By.id("login-password")).sendKeys(password);
         driver.findElement(By.id("login-button")).click();
+
     }
 }
