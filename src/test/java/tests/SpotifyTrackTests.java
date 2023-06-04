@@ -1,5 +1,6 @@
 package tests;
 
+import com.google.gson.JsonObject;
 import io.restassured.response.ValidatableResponse;
 import jdk.jfr.Description;
 import org.apache.http.HttpStatus;
@@ -12,11 +13,10 @@ public class SpotifyTrackTests extends SpotifyBase {
     @Test
     public void search() {
         ValidatableResponse response =
-                searchArtist("Jack Parow").
+                searchArtist(artist).
                         assertThat().
                         statusCode(HttpStatus.SC_OK).
-                        body("artists.items[0].genres", Matchers.hasItem("african rock")).
-                        body("artists.items[0].genres", Matchers.hasItem("afrikaans"));
+                        body("artists.items[0].genres", Matchers.hasItem(genre));
     }
 
     @Description("")
@@ -24,14 +24,14 @@ public class SpotifyTrackTests extends SpotifyBase {
     public void validateOneOfTheArtistsTopTracks() {
 
         String artistId =
-                searchArtist("Jack Parow").
+                searchArtist(artist).
                         extract().
                         jsonPath().
                         get("artists.items[0].id");
 
         ValidatableResponse validatableResponse =
                 searchTopTrack(artistId).
-                        body("tracks.name", Matchers.hasItem("Puff Puff Puff"));
+                        body("tracks.name", Matchers.hasItem(topTrack));
     }
 
     @Description("")
@@ -39,7 +39,7 @@ public class SpotifyTrackTests extends SpotifyBase {
     public void subscribeAndUnsubscribeToArtistTopTrack() {
 
         String artistId =
-                searchArtist("Jack Parow").
+                searchArtist(artist).
                         extract().
                         jsonPath().
                         get("artists.items[0].id");

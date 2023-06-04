@@ -1,25 +1,24 @@
 package core;
 
-import io.restassured.http.Header;
+import com.google.gson.JsonObject;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import static io.restassured.RestAssured.given;
 
 public class BaseAPIClient {
 
     WebClient webClient = new WebClient();
-
-    static String access_token = "";
-    static String refresh_token = "";
+    private static String access_token = "";
+    private static String refresh_token = "";
+    public static JsonReader jsonReader;
+    public static JsonObject testData;
 
     @BeforeClass
     public void startup() {
+        jsonReader = new JsonReader();
+        testData = jsonReader.readConfigData();
         OAuth2Setup();
     }
 
@@ -27,59 +26,47 @@ public class BaseAPIClient {
         return access_token;
     }
 
-    public Header getTokenHeader() {
-        return new Header("Authorization", "Bearer " + access_token);
-    }
-
-    public void setup() {
-
-    }
-
-    public void tearDown() {
-
-    }
-
     public void OAuth2Setup() {
-        String authorizationUrl = "https://accounts.spotify.com/authorize";
-        String clientId = "0c6c763d6a484d77b845bd7670fbb0fc";
-        String client_secret = "20154691ba5948ce82b8d99ca8110f0b";
-        String redirectUri = "http://localhost:8080";
+        String authorizationUrl = testData.get("accountsUri").getAsString() + "/authorize";
+        String tokenUrl = testData.get("accountsUri").getAsString() + "/api/token";
+
+        String clientId = testData.get("clientId").getAsString();
+        String clientSecret = testData.get("clientSecret").getAsString();
+        String redirectUri = testData.get("redirectUrl").getAsString();
         String scope = "user-library-modify user-library-read playlist-modify-public playlist-modify-private";
+        String authorizationCode = "";
 
         Response response = given()
                 .log().all()
                 .redirects().follow(false)
                 .param("client_id", clientId)
-                .param("client_secret", client_secret)
+                .param("client_secret", clientSecret)
                 .param("response_type", "code")
                 .param("redirect_uri", redirectUri)
                 .param("scope", scope)
-                .get(authorizationUrl).then().log().all().extract().response();
+                .get(authorizationUrl).then().log().all()
+                .extract().response();
 
-
-        String authorizationCode = "";
-
-        System.out.println("==================== Redirect to location header ==========================\n\n");
         if (response.getStatusCode() == 303) {
             String redirectUrl = response.getHeader("Location");
 
-            authorizationCode = webClient.navigateToUrl(redirectUrl, "ryankruger45@gmail.com", "Kru@2020");
-            System.out.println(authorizationCode);
+            authorizationCode =
+                    webClient.getCallbackWithCode(
+                            redirectUrl,
+                            testData.get("spotifyUsername").getAsString(),
+                            testData.get("spotifyPassword").getAsString());
         }
-
-        String tokenUrl = "https://accounts.spotify.com/api/token";
-        String clientSecret = "20154691ba5948ce82b8d99ca8110f0b";
 
         Response tokenResponse = given()
                 .log().all()
                 .header("Content-Type", "application/x-www-form-urlencoded")
                 .formParam("grant_type", "authorization_code")
                 .formParam("code", extractCodeFromUrl(authorizationCode))
-                .formParam("redirect_uri", "http://localhost:8080")
-
+                .formParam("redirect_uri", redirectUri)
                 .auth().preemptive().basic(clientId, clientSecret).log().all()
-                .post(tokenUrl).
-                then().log().all().extract().response();
+                .post(tokenUrl)
+                .then().log().all()
+                .extract().response();
 
         access_token = tokenResponse.jsonPath().getString("access_token");
         refresh_token = tokenResponse.jsonPath().getString("refresh_token");
@@ -94,6 +81,6 @@ public class BaseAPIClient {
             return matcher.group(1);
         }
 
-        return null; // Code not found in the redirect URL
+        return null;
     }
 }
