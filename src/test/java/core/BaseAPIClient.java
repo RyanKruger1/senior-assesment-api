@@ -1,6 +1,9 @@
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
+package core;
+
+import io.restassured.http.Header;
 import io.restassured.response.Response;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.regex.Matcher;
@@ -15,8 +18,17 @@ public class BaseAPIClient {
     static String access_token = "";
     static String refresh_token = "";
 
+    @BeforeClass
     public void startup() {
+        OAuth2Setup();
+    }
 
+    public String getAccess_token() {
+        return access_token;
+    }
+
+    public Header getTokenHeader() {
+        return new Header("Authorization", "Bearer " + access_token);
     }
 
     public void setup() {
@@ -27,13 +39,12 @@ public class BaseAPIClient {
 
     }
 
-    @Test
     public void OAuth2Setup() {
         String authorizationUrl = "https://accounts.spotify.com/authorize";
         String clientId = "0c6c763d6a484d77b845bd7670fbb0fc";
         String client_secret = "20154691ba5948ce82b8d99ca8110f0b";
         String redirectUri = "http://localhost:8080";
-        // String scope = "<space_separated_scopes>";
+        String scope = "user-library-modify user-library-read playlist-modify-public playlist-modify-private";
 
         Response response = given()
                 .log().all()
@@ -42,7 +53,7 @@ public class BaseAPIClient {
                 .param("client_secret", client_secret)
                 .param("response_type", "code")
                 .param("redirect_uri", redirectUri)
-                // .param("scope", scope)
+                .param("scope", scope)
                 .get(authorizationUrl).then().log().all().extract().response();
 
 
