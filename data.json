@@ -1,0 +1,12 @@
+{
+  "baseUri": "https://api.spotify.com/v1",
+  "accountsUri": "https://accounts.spotify.com",
+  "redirectUrl": "http://localhost:8080",
+  "clientSecret": "",
+  "clientId": "",
+  "spotifyUsername": "",
+  "spotifyPassword": "",
+  "artistUnderTest": "Jack Parow",
+  "artistGenre": "african rock",
+  "artistTopTrack": "Puff Puff Puff"
+}

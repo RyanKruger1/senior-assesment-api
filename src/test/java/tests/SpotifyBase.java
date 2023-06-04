@@ -12,9 +12,17 @@ import static io.restassured.RestAssured.given;
 
 public class SpotifyBase extends BaseAPIClient {
 
+    String artist;
+    String genre;
+    String topTrack;
+
     @BeforeMethod
     public void setupSpotifyBase() {
         RestAssured.baseURI = "https://api.spotify.com/v1";
+
+        artist = testData.get("artistUnderTest").getAsString();
+        genre = testData.get("artistGenre").getAsString();
+        topTrack = testData.get("artistTopTrack").getAsString();
     }
 
     public ValidatableResponse searchArtist(String artist) {
