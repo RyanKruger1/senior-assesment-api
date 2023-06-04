@@ -29,9 +29,9 @@ After adding all the requirements, to run the automation tests on Windows, follo
 3. Open a command prompt or PowerShell window.
 4. Navigate to the root directory of the cloned repository.
 5. Run the following command to execute the tests:
-
+```
 gradlew.bat clean test
-
+```
 To run the automation tests on macOS, follow these steps:
 
 1. Clone the repository to your local machine.
@@ -39,9 +39,9 @@ To run the automation tests on macOS, follow these steps:
 3. Open a terminal window.
 4. Navigate to the root directory of the cloned repository.
 5. Run the following command to execute the tests:
-
+```
 ./gradlew clean test
-
+```
 # Postman Collection
 
 The postman collection has two files:
