@@ -1,5 +1,6 @@
 .gradle
-.idea
+/.idea/
 /out
 /.gradle/
 /gradle/
+data.json
