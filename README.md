@@ -1,4 +1,4 @@
-#Senior Assessment: Section 2 - API
+# Senior Assessment: Section 2 - API
 
 This repository is created to showcase the authors API testing abilities.
 
@@ -9,7 +9,7 @@ This repo consist of two parts:
  - Java Api automation framework
  - Postman Collection
  
-#Java Api automation framework
+# Java Api automation framework
 
 Requirements before run: 
 1) The automation needs spotify ClientSecret and ClientID, which you can get after you create an application on spotifies developer portal.
@@ -42,7 +42,7 @@ To run the automation tests on macOS, follow these steps:
 
 ./gradlew clean test
 
-#Postman Collection
+# Postman Collection
 
 The postman collection has two files:
 1) Environment Variables
