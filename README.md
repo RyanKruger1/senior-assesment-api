@@ -12,9 +12,9 @@ This repo consist of two parts:
 # Java Api automation framework
 
 Requirements before run: 
-1) The automation needs spotify ClientSecret and ClientID, which you can get after you create an application on spotifies developer portal.
+1) The automation needs spotify ClientSecret and ClientID, which you can get after you create an application on spotify's developer portal.
 2) The automation uses OAUth2 so you will need to add a redirectUri to the created application. You can do so from your spotify application dashboard
-and going to settings. See below image:
+and going to settings. See below imagy
 
 ![image](https://github.com/RyanKruger1/senior-assesment-api/assets/44663422/d438953f-adbd-4402-8434-718653998122)
 
