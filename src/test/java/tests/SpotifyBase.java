@@ -1,22 +1,25 @@
 package tests;
 
+import core.APITestListener;
 import core.BaseAPIClient;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Listeners;
 
 import static io.restassured.RestAssured.given;
 
+@Listeners(APITestListener.class)
 public class SpotifyBase extends BaseAPIClient {
 
     String artist;
     String genre;
     String topTrack;
 
-    @BeforeMethod
+    @BeforeClass
     public void setupSpotifyBase() {
         RestAssured.baseURI = "https://api.spotify.com/v1";
 

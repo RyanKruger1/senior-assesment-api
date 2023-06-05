@@ -1,7 +1,6 @@
 package tests;
 
 import io.qameta.allure.Description;
-import io.restassured.response.ValidatableResponse;
 import org.apache.http.HttpStatus;
 import org.hamcrest.Matchers;
 import org.testng.annotations.Test;
