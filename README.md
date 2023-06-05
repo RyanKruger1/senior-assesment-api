@@ -56,4 +56,4 @@ Where all the required information is provided for the Postman calls to work. Th
 The postman collection uses OAuth2.0 so the client will prompt you to sign in with your spotify credentials. When attempting to authorize.
 
 # Note
-To complete the OAuth2 flow, the API automation framework and spotify opens spotify on chrome/localhost to fetch a token for Authorization.
+To complete the OAuth2 flow, the _API automation framework_ and _POSTMAN_ opens spotify on chrome/localhost to fetch a token for Authorization.
