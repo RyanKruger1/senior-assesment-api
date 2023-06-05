@@ -2,7 +2,8 @@ package core;
 
 import com.google.gson.JsonObject;
 import io.restassured.response.Response;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import static io.restassured.RestAssured.given;
@@ -11,11 +12,10 @@ public class BaseAPIClient {
 
     WebClient webClient = new WebClient();
     private static String access_token = "";
-    private static String refresh_token = "";
     public static JsonReader jsonReader;
     public static JsonObject testData;
 
-    @BeforeClass
+    @BeforeSuite
     public void startup() {
         jsonReader = new JsonReader();
         testData = jsonReader.readConfigData();
