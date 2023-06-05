@@ -8,13 +8,17 @@ https://developer.spotify.com/documentation/web-api
 This repo consist of two parts:
  - Java Api automation framework
  - Postman Collection
+
+Required Software:
+ - Java( JDK 11 or Higher)
+ - Chrome Browser
  
 # Java Api automation framework
 
 Requirements before run: 
 1) The automation needs spotify ClientSecret and ClientID, which you can get after you create an application on spotify's developer portal.
 2) The automation uses OAUth2 so you will need to add a redirectUri to the created application. You can do so from your spotify application dashboard
-and going to settings. See below imagy
+and going to settings. See below image. 
 
 ![image](https://github.com/RyanKruger1/senior-assesment-api/assets/44663422/d438953f-adbd-4402-8434-718653998122)
 
@@ -50,3 +54,6 @@ Where all the required information is provided for the Postman calls to work. Th
 2) The actual collection.
 
 The postman collection uses OAuth2.0 so the client will prompt you to sign in with your spotify credentials. When attempting to authorize.
+
+# Note
+To complete the OAuth2 flow, the API automation framework and spotify opens spotify on chrome/localhost to fetch a token for Authorization.
