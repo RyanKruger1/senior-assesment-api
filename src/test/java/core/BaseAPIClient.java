@@ -12,6 +12,7 @@ public class BaseAPIClient {
 
     WebClient webClient = new WebClient();
     private static String access_token = "";
+    private static String refresh_token = "";
     public static JsonReader jsonReader;
     public static JsonObject testData;
 
